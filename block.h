@@ -11,7 +11,8 @@ protected:
 	int y;
 	int width;
 	int height;
-	char block[3][3];
+	int color;
+	char shape[4][4];
 	grid_t *grid;
 	
 public:	
@@ -20,9 +21,9 @@ public:
 	void move_down();
 	void move_side(bool left);
 	void fall();
-	virtual void print_block() = 0;
+	void print_block();
 	virtual bool check_collision() = 0;
-	//virtual void rotate() = 0;
+	virtual void rotate(bool clockwise) = 0;
 	
 private:
 	void clear_block();
@@ -36,11 +37,8 @@ class Square : public Block {
 public:
 	Square(grid_t *grid);
 	~Square() {}
-	void print_block();
+	void rotate(bool clockwise);
 	bool check_collision();
-	
-private:
-	char shape[2][2];
 };
 
 class T_Block : public Block {

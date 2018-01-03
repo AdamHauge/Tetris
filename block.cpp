@@ -11,6 +11,18 @@ Block::Block(grid_t *grid)
 	y = 0;
 }
 
+void Block::print_block()
+{
+	for(int i = 0; i < height; i++) {
+		for(int j = 0; j < width; j++) {
+			if('X' == shape[i][j]) {
+				grid->color[y + i][x + j] = color;
+				grid->layout[y + i][x + j] = shape[i][j];
+			}
+		}
+	}
+}
+
 void Block::move_down()
 {
 	clear_block();
@@ -45,6 +57,7 @@ void Block::clear_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
+			//grid->color[i][j] = COLOR_BLACK;
 			grid->layout[y + i][x + j] = ' ';
 		}
 	}

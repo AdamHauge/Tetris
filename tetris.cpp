@@ -5,6 +5,7 @@
 #include "grid.h"
 #include "block.h"
 #include "controls.h"
+//#include "colors.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,7 @@ int main(int argc, char *argv[])
 	
 	/* Initialize the screen */
 	initscr();
+	start_color();
 	curs_set(0);
 	noecho();
 	cbreak();

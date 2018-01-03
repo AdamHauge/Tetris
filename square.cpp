@@ -5,6 +5,8 @@ Square::Square(grid_t *grid) : Block(grid)
 {
 	width = 2;
 	height = 2;
+	color = COLOR_GREEN;
+	
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
 			shape[i][j] = 'X';
@@ -12,13 +14,9 @@ Square::Square(grid_t *grid) : Block(grid)
 	}
 }
 
-void Square::print_block()
+void Square::rotate(bool clockwise) 
 {
-	for(int i = 0; i < height; i++) {
-		for(int j = 0; j < width; j++) {
-			grid->layout[y + i][x + j] = shape[i][j];
-		}
-	}
+	move_down();
 }
 
 bool Square::check_collision()

@@ -13,6 +13,7 @@ class Block;
 
 typedef struct grid {
 	char layout[screen_height][screen_width];
+	int color[screen_height][screen_width];
 	std::deque<Block *> lineup;
 } grid_t;
 
