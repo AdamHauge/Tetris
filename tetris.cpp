@@ -14,11 +14,13 @@ int main(int argc, char *argv[])
 	
 	/* Initialize the screen */
 	initscr();
-	print_screen(&grid);
 	curs_set(0);
 	noecho();
 	cbreak();
 	timeout(0);
+	
+	print_screen(&grid);
+	refresh();
 	
 	while(false == check_game_over(&grid)) {
 		/* Take the first block from the lineup */
