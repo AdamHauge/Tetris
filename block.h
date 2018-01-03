@@ -15,6 +15,8 @@ protected:
 	char shape[4][4];
 	grid_t *grid;
 	
+	void reset_shape();
+	
 public:	
 	Block(grid_t *grid);
 	virtual ~Block() {}
@@ -30,7 +32,11 @@ private:
 };
 
 class I_Block : public Block {
-	
+public:
+	I_Block(grid_t *grid);
+	~I_Block() {}
+	void rotate(bool clockwise);
+	bool check_collision();
 };
 
 class Square : public Block {

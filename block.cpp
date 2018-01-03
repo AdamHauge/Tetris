@@ -2,8 +2,6 @@
 #include <curses.h>
 #include <iostream>
 
-void clear_block();
-
 Block::Block(grid_t *grid)
 {
 	this->grid = grid;
@@ -15,7 +13,7 @@ void Block::print_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			if('X' == shape[i][j]) {
+			if(' ' != shape[i][j]) {
 				grid->color[y + i][x + j] = color;
 				grid->layout[y + i][x + j] = shape[i][j];
 			}
@@ -57,8 +55,18 @@ void Block::clear_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			//grid->color[i][j] = COLOR_BLACK;
 			grid->layout[y + i][x + j] = ' ';
+		}
+	}
+}
+
+void Block::reset_shape() 
+{
+	clear_block();
+	
+	for(int i = 0; i < height; i++) {
+		for(int j = 0; j < width; j++) {
+			shape[i][j] = ' ';
 		}
 	}
 }

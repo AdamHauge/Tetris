@@ -14,6 +14,12 @@ int get_input(Block *b)
 		case 's':
 			b->fall();
 			break;
+		case 'z':
+			b->rotate(false);
+			break;
+		case 'c':
+			b->rotate(true);
+			break;
 		default:
 			b->move_down();
 			break;

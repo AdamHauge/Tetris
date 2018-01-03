@@ -20,7 +20,8 @@ void Square::rotate(bool clockwise)
 }
 
 bool Square::check_collision()
-{	for(int i = 0; i < width; i++) {
+{	
+	for(int i = 0; i < width; i++) {
 		if(' ' != grid->layout[y + height][x + i]) {
 			return true;
 		}

@@ -19,8 +19,10 @@ typedef struct grid {
 
 grid_t initialize_grid();
 void init_lineup(grid_t *grid);
+void insert_lineup(grid_t *grid);
 void print_screen(grid_t *grid);
 int delete_lineup(grid_t *grid);
+void clear_full_lines(grid_t *grid);
 bool check_game_over(grid_t *grid);
 
 #endif //GRID_H

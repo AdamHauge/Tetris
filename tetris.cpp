@@ -1,15 +1,17 @@
 #include <curses.h>
 #include <iostream>
 #include <unistd.h>
+#include <cstdlib>
+#include <time.h>
 
 #include "grid.h"
 #include "block.h"
 #include "controls.h"
-//#include "colors.h"
 
 int main(int argc, char *argv[])
 {
 	/* Initialize the game */
+	srand(time(NULL));
 	grid_t grid = initialize_grid();
 	init_lineup(&grid);
 	
@@ -28,7 +30,7 @@ int main(int argc, char *argv[])
 		/* Take the first block from the lineup */
 		Block *b = grid.lineup.front();
 		grid.lineup.pop_front();
-		grid.lineup.push_back(new Square(&grid));
+		insert_lineup(&grid);
 		
 		/* Print the block at the top of the screen */
 		b->print_block();
@@ -49,6 +51,8 @@ int main(int argc, char *argv[])
 			sleep(1);
 			
 		}
+		
+		clear_full_lines(&grid);
 		refresh();
 		delete b;
 		if(getch() == 'q') break;
