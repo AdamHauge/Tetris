@@ -12,8 +12,8 @@ int get_input(Block *b)
 		case 'q':
 			return 1;
 		case 's':
-			b->move_down();
-			/* Intentional fall-through */
+			b->fall();
+			break;
 		default:
 			b->move_down();
 			break;

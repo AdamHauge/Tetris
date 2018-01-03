@@ -19,6 +19,7 @@ public:
 	virtual ~Block() {}
 	void move_down();
 	void move_side(bool left);
+	void fall();
 	virtual void print_block() = 0;
 	virtual bool check_collision() = 0;
 	//virtual void rotate() = 0;

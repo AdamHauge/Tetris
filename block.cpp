@@ -7,7 +7,7 @@ void clear_block();
 Block::Block(grid_t *grid)
 {
 	this->grid = grid;
-	x = screen_width / 2;
+	x = (screen_width / 2) - 1;
 	y = 0;
 }
 
@@ -21,13 +21,24 @@ void Block::move_down()
 void Block::move_side(bool left)
 {
 	clear_block();
-	if(left) {
+	if(left && ' ' == grid->layout[y][x - 1]) {
 		x--;
-	} else {
+	} else if(!left && ' ' == grid->layout[y][x + width]) {
 		x++;
 	}
 	
 	move_down();
+}
+
+void Block::fall()
+{
+	clear_block();
+	
+	while(false == check_collision()) {
+		y++;
+	}
+	
+	print_block();
 }
 
 void Block::clear_block()
