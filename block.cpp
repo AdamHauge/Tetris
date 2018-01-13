@@ -5,7 +5,7 @@
 Block::Block(grid_t *grid)
 {
 	this->grid = grid;
-	x = (screen_width / 2) - 1;
+	x = (SCREEN_WIDTH / 2) - 1;
 	y = 0;
 }
 
@@ -31,9 +31,9 @@ void Block::move_down()
 void Block::move_side(bool left)
 {
 	clear_block();
-	if(left && ' ' == grid->layout[y][x - 1]) {
+	if(left && EMPTY_SPACE == grid->layout[y][x - 1]) {
 		x--;
-	} else if(!left && ' ' == grid->layout[y][x + width]) {
+	} else if(!left && EMPTY_SPACE == grid->layout[y][x + width]) {
 		x++;
 	}
 	

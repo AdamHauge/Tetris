@@ -5,16 +5,17 @@ grid_t initialize_grid()
 {
 	grid_t grid;
 	
-	for(int i = 0; i < screen_height; i++) {
-		for(int j = 0; j < screen_width; j++) {
+	for(int i = 0; i < SCREEN_HEIGHT; i++) {
+		for(int j = 0; j < SCREEN_WIDTH; j++) {
 			/* create border */
-			if((i != 0) && (i == screen_height - 1 || (j == 0 || j == screen_width - 1))) {
+			if((i != 0) && (i == SCREEN_HEIGHT - 1 || (j == 0 || j == SCREEN_WIDTH - 1))) {
 				grid.layout[i][j] = '*';
 				grid.color[i][j] = COLOR_WHITE;
 			}
 			/* non-border */
 			else {
-				grid.layout[i][j] = ' ';
+				grid.layout[i][j] = EMPTY_SPACE;
+				grid.color[i][j] = COLOR_BLACK;
 			}
 		}
 	}
@@ -60,8 +61,8 @@ void print_screen(grid_t *grid)
 	init_pair(7, COLOR_WHITE, COLOR_BLACK);
 	
 	/* print grid */
-	for(int i = 0; i < screen_height; i++) {
-		for(int j = 0; j < screen_width; j++) {
+	for(int i = 0; i < SCREEN_HEIGHT; i++) {
+		for(int j = 0; j < SCREEN_WIDTH; j++) {
 			attron(COLOR_PAIR(grid->color[i][j]));
 			mvaddch(i, j + 1, grid->layout[i][j]);
 			attroff(COLOR_PAIR(grid->color[i][j]));
@@ -72,7 +73,7 @@ void print_screen(grid_t *grid)
 bool check_game_over(grid_t *grid)
 {
 	/* If next block collides with top row game over */
-	for(int i = 1; i < screen_width - 1; i++) {
+	for(int i = 1; i < SCREEN_WIDTH - 1; i++) {
 		if(' ' != grid->layout[1][i]) {
 			return true;
 		}
@@ -83,14 +84,14 @@ bool check_game_over(grid_t *grid)
 void clear_line(grid_t *grid, int line)
 {
 	/* Clear out full line */
-	for(int i = 1; i < screen_width - 1; i++) {
+	for(int i = 1; i < SCREEN_WIDTH - 1; i++) {
 		grid->layout[line][i] = ' ';
 		grid->color[line][i] = COLOR_BLACK;
 	}
 	
 	/* Move all above lines down by one */
 	for(int i = line; i > 1; i--) {
-		for(int j = 1; j < screen_width - 1; j++) {
+		for(int j = 1; j < SCREEN_WIDTH - 1; j++) {
 			grid->layout[i][j] = grid->layout[i - 1][j];
 			grid->color[i][j] = grid->color[i - 1][j];
 		}
@@ -100,10 +101,10 @@ void clear_line(grid_t *grid, int line)
 void clear_full_lines(grid_t *grid)
 {
 	/* Check if any lines are full */
-	for(int i = 0; i < screen_height - 1; i++) {
+	for(int i = 0; i < SCREEN_HEIGHT - 1; i++) {
 		bool full = true;
 		
-		for(int j = 0; j < screen_width; j++) {
+		for(int j = 0; j < SCREEN_WIDTH; j++) {
 			if(' ' == grid->layout[i][j]) {
 				full = false;
 				break;

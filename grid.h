@@ -4,16 +4,17 @@
 #include <curses.h>
 #include <deque>
 
-#include "Block.h"
+#include "block.h"
 
-#define screen_width 10
-#define screen_height 22
+#define SCREEN_WIDTH 10
+#define SCREEN_HEIGHT 22
+#define EMPTY_SPACE ' '
 
 class Block;
 
 typedef struct grid {
-	char layout[screen_height][screen_width];
-	int color[screen_height][screen_width];
+	char layout[SCREEN_HEIGHT][SCREEN_WIDTH];
+	int color[SCREEN_HEIGHT][SCREEN_WIDTH];
 	std::deque<Block *> lineup;
 } grid_t;
 

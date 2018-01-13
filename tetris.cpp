@@ -44,6 +44,7 @@ int main(int argc, char *argv[])
 			/* Move block and re-print */
 			/* Press 'q' to quit */
 			if(get_input(b)) {
+				delete b;
 				goto GAMEOVER;
 			}
 			print_screen(&grid);
