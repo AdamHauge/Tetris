@@ -2,9 +2,9 @@
 #include <curses.h>
 #include <iostream>
 
-Block::Block(grid_t *grid)
+Block::Block(screen_t *screen)
 {
-	this->grid = grid;
+	this->screen = screen;
 	x = (SCREEN_WIDTH / 2) - 1;
 	y = 0;
 }
@@ -14,11 +14,30 @@ void Block::print_block()
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
 			if(' ' != shape[i][j]) {
-				grid->color[y + i][x + j] = color;
-				grid->layout[y + i][x + j] = shape[i][j];
+				screen->color[y + i][x + j] = color;
+				screen->layout[y + i][x + j] = shape[i][j];
 			}
 		}
 	}
+}
+
+void Block::get_shape(char ret_shape[4][4])
+{	
+	for(int i = 0; i < 4; i++) {
+		for(int j = 0; j < 4; j++) {
+			ret_shape[i][j] = shape[i][j];
+		}
+	}
+}
+
+char Block::get_symbol()
+{
+	return symbol;
+}
+
+int Block::get_color()
+{
+	return color;
 }
 
 void Block::move_down()
@@ -31,9 +50,9 @@ void Block::move_down()
 void Block::move_side(bool left)
 {
 	clear_block();
-	if(left && EMPTY_SPACE == grid->layout[y][x - 1]) {
+	if(left && EMPTY_SPACE == screen->layout[y][x - 1]) {
 		x--;
-	} else if(!left && EMPTY_SPACE == grid->layout[y][x + width]) {
+	} else if(!left && EMPTY_SPACE == screen->layout[y][x + width]) {
 		x++;
 	}
 	
@@ -55,7 +74,7 @@ void Block::clear_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			grid->layout[y + i][x + j] = ' ';
+			screen->layout[y + i][x + j] = ' ';
 		}
 	}
 }

@@ -7,8 +7,8 @@ CFLAGS = -Wall -Werror -ggdb -funroll-loops
 CXXFLAGS = -std=c++11 -Wall -Werror -ggdb -funroll-loops
 LDFLAGS = -lncurses
 
-BIN = tetris grid controls block square i_block
-OBJS = tetris.o grid.o controls.o block.o square.o i_block.o
+BIN = tetris screen controls block square i_block
+OBJS = tetris.o screen.o controls.o block.o square.o i_block.o
 
 $(BIN): $(OBJS)
 	@$(ECHO) Linking $@

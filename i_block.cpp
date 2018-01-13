@@ -2,14 +2,15 @@
 
 #include <algorithm>
 
-I_Block::I_Block(grid_t *grid) : Block(grid)
+I_Block::I_Block(screen_t *screen) : Block(screen)
 {
 	width = 1;
 	height = 4;
 	color = COLOR_RED;
+	symbol = 'I';
 	
 	for(int i = 0; i < 4; i++) {
-		shape[i][0] = 'I';
+		shape[i][0] = symbol;
 	}
 }
 
@@ -17,7 +18,7 @@ void I_Block::rotate(bool clockwise)
 {
 	if(1 == height) {
 		for(int i = 1; i < 4; i++) {
-			if(' ' != grid->layout[y + i][x]) {
+			if(' ' != screen->layout[y + i][x]) {
 				move_down();
 				return;
 			}
@@ -26,7 +27,7 @@ void I_Block::rotate(bool clockwise)
 	
 	else if(4 == height) {
 		for(int i = 1; i < 4; i++) {
-			if(' ' != grid->layout[y][x + i]) {
+			if(' ' != screen->layout[y][x + i]) {
 				move_down();
 				return;
 			}
@@ -38,13 +39,13 @@ void I_Block::rotate(bool clockwise)
 	
 	if(1 == height) {		
 		for(int i = 0; i < 4; i++) {
-			shape[0][i] = 'I';
+			shape[0][i] = symbol;
 		}
 	}
 	
 	else if(4 == height) {		
 		for(int i = 0; i < 4; i++) {
-			shape[i][0] = 'I';
+			shape[i][0] = symbol;
 		}
 	}
 	
@@ -54,7 +55,7 @@ void I_Block::rotate(bool clockwise)
 bool I_Block::check_collision()
 {
 	for(int i = 0; i < width; i++) {
-		if(' ' != grid->layout[y + height][x + i]) {
+		if(' ' != screen->layout[y + height][x + i]) {
 			return true;
 		}
 	}

@@ -12,18 +12,18 @@
 
 class Block;
 
-typedef struct grid {
+typedef struct screen {
 	char layout[SCREEN_HEIGHT][SCREEN_WIDTH];
 	int color[SCREEN_HEIGHT][SCREEN_WIDTH];
 	std::deque<Block *> lineup;
-} grid_t;
+} screen_t;
 
-grid_t initialize_grid();
-void init_lineup(grid_t *grid);
-void insert_lineup(grid_t *grid);
-void print_screen(grid_t *grid);
-int delete_lineup(grid_t *grid);
-void clear_full_lines(grid_t *grid);
-bool check_game_over(grid_t *grid);
+screen_t initialize_grid();
+void init_lineup(screen_t *screen);
+void insert_lineup(screen_t *screen);
+void print_screen(screen_t *screen);
+int delete_lineup(screen_t *screen);
+void clear_full_lines(screen_t *screen);
+bool check_game_over(screen_t *screen);
 
 #endif //GRID_H

@@ -4,7 +4,7 @@
 #include <cstdlib>
 #include <time.h>
 
-#include "grid.h"
+#include "screen.h"
 #include "block.h"
 #include "controls.h"
 
@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
 {
 	/* Initialize the game */
 	srand(time(NULL));
-	grid_t grid = initialize_grid();
-	init_lineup(&grid);
+	screen_t screen = initialize_grid();
+	init_lineup(&screen);
 	
 	/* Initialize the screen */
 	initscr();
@@ -23,18 +23,18 @@ int main(int argc, char *argv[])
 	cbreak();
 	timeout(0);
 	
-	print_screen(&grid);
+	print_screen(&screen);
 	refresh();
 	
-	while(false == check_game_over(&grid)) {
+	while(false == check_game_over(&screen)) {
 		/* Take the first block from the lineup */
-		Block *b = grid.lineup.front();
-		grid.lineup.pop_front();
-		insert_lineup(&grid);
+		Block *b = screen.lineup.front();
+		screen.lineup.pop_front();
+		insert_lineup(&screen);
 		
 		/* Print the block at the top of the screen */
 		b->print_block();
-		print_screen(&grid);
+		print_screen(&screen);
 		refresh();
 		sleep(1);
 		
@@ -47,13 +47,13 @@ int main(int argc, char *argv[])
 				delete b;
 				goto GAMEOVER;
 			}
-			print_screen(&grid);
+			print_screen(&screen);
 			refresh();
 			sleep(1);
 			
 		}
 		
-		clear_full_lines(&grid);
+		clear_full_lines(&screen);
 		refresh();
 		delete b;
 		if(getch() == 'q') break;
@@ -64,7 +64,7 @@ int main(int argc, char *argv[])
 	endwin();
 	
 	std::cout << "Game Over" << std::endl;
-	delete_lineup(&grid);
+	delete_lineup(&screen);
 	
 	return 0;
 }

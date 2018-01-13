@@ -1,9 +1,9 @@
 #ifndef BLOCK_H
 #define BLOCK_H
 
-#include "grid.h"
+#include "screen.h"
 
-typedef struct grid grid_t;
+typedef struct screen screen_t;
 
 class Block {
 protected:
@@ -12,18 +12,22 @@ protected:
 	int width;
 	int height;
 	int color;
+	char symbol;
 	char shape[4][4];
-	grid_t *grid;
+	screen_t *screen;
 	
 	void reset_shape();
 	
 public:	
-	Block(grid_t *grid);
+	Block(screen_t *screen);
 	virtual ~Block() {}
 	void move_down();
 	void move_side(bool left);
 	void fall();
 	void print_block();
+	void get_shape(char ret_shape[4][4]);
+	char get_symbol();
+	int get_color();
 	virtual bool check_collision() = 0;
 	virtual void rotate(bool clockwise) = 0;
 	
@@ -33,7 +37,7 @@ private:
 
 class I_Block : public Block {
 public:
-	I_Block(grid_t *grid);
+	I_Block(screen_t *screen);
 	~I_Block() {}
 	void rotate(bool clockwise);
 	bool check_collision();
@@ -41,7 +45,7 @@ public:
 
 class Square : public Block {
 public:
-	Square(grid_t *grid);
+	Square(screen_t *screen);
 	~Square() {}
 	void rotate(bool clockwise);
 	bool check_collision();
