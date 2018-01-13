@@ -23,7 +23,7 @@ void Square::rotate(bool clockwise)
 bool Square::check_collision()
 {	
 	for(int i = 0; i < width; i++) {
-		if(' ' != screen->layout[y + height][x + i]) {
+		if(EMPTY_SPACE != screen->layout[y + height][x + i]) {
 			return true;
 		}
 	}

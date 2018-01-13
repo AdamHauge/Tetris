@@ -6,7 +6,7 @@
 
 #include "screen.h"
 #include "block.h"
-#include "controls.h"
+#include "game.h"
 
 int main(int argc, char *argv[])
 {

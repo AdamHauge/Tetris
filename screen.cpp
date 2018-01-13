@@ -1,4 +1,5 @@
 #include "screen.h"
+#include "game.h"
 #include <cstdlib>
 
 screen_t initialize_grid()
@@ -52,12 +53,14 @@ void insert_lineup(screen_t *screen)
 
 void print_lineup(screen_t *screen)
 {
+	/* print background */
 	for(int i = 0; i < 15; i++) {
 		for(int j = 0; j < 6; j++) {
 			mvaddch(i + 1, j + SCREEN_WIDTH + 2, '*');
 		}
 	}
 	
+	/* print each block in lineup */
 	for(unsigned int curr = 0; curr < screen->lineup.size(); curr++) {	
 		char shape[4][4];
 		Block *block = screen->lineup[curr];
@@ -105,13 +108,14 @@ void print_screen(screen_t *screen)
 	}
 	
 	print_lineup(screen);
+	print_score();
 }
 
 bool check_game_over(screen_t *screen)
 {
 	/* If next block collides with top row game over */
 	for(int i = 1; i < SCREEN_WIDTH - 1; i++) {
-		if(' ' != screen->layout[1][i]) {
+		if(EMPTY_SPACE != screen->layout[1][i]) {
 			return true;
 		}
 	}
@@ -122,7 +126,7 @@ void clear_line(screen_t *screen, int line)
 {
 	/* Clear out full line */
 	for(int i = 1; i < SCREEN_WIDTH - 1; i++) {
-		screen->layout[line][i] = ' ';
+		screen->layout[line][i] = EMPTY_SPACE;
 		screen->color[line][i] = COLOR_BLACK;
 	}
 	
@@ -135,14 +139,16 @@ void clear_line(screen_t *screen, int line)
 	}
 }
 
-void clear_full_lines(screen_t *screen)
+int check_lines(screen_t *screen)
 {
+	int num_lines_cleared = 0;
+	
 	/* Check if any lines are full */
 	for(int i = 0; i < SCREEN_HEIGHT - 1; i++) {
 		bool full = true;
 		
 		for(int j = 0; j < SCREEN_WIDTH; j++) {
-			if(' ' == screen->layout[i][j]) {
+			if(EMPTY_SPACE == screen->layout[i][j]) {
 				full = false;
 				break;
 			}
@@ -150,10 +156,26 @@ void clear_full_lines(screen_t *screen)
 		
 		/* If line is full, clear it */
 		if(true == full) {
-			refresh();
 			clear_line(screen, i);
+			num_lines_cleared++;
 		}
 	}
+	
+	return num_lines_cleared;
+}
+
+void clear_full_lines(screen_t *screen)
+{
+	int lines_cleared = 0;
+	int num_lines = 0;
+	
+	do {
+		/* get total number of lines cleared */
+		lines_cleared = check_lines(screen);
+		num_lines += lines_cleared;
+	} while(lines_cleared); /* repeat until no more lines can be cleared */
+	
+	update_score(num_lines);
 }
 
 int delete_lineup(screen_t *screen)

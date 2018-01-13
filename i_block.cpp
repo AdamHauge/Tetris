@@ -16,9 +16,10 @@ I_Block::I_Block(screen_t *screen) : Block(screen)
 
 void I_Block::rotate(bool clockwise)
 {
+	/* check if rotating would cause any collisions */ 
 	if(1 == height) {
 		for(int i = 1; i < 4; i++) {
-			if(' ' != screen->layout[y + i][x]) {
+			if(EMPTY_SPACE != screen->layout[y + i][x]) {
 				move_down();
 				return;
 			}
@@ -27,13 +28,14 @@ void I_Block::rotate(bool clockwise)
 	
 	else if(4 == height) {
 		for(int i = 1; i < 4; i++) {
-			if(' ' != screen->layout[y][x + i]) {
+			if(EMPTY_SPACE != screen->layout[y][x + i]) {
 				move_down();
 				return;
 			}
 		}
 	}
 	
+	/* rotate */
 	reset_shape();
 	std::swap(width, height);
 	
@@ -49,13 +51,15 @@ void I_Block::rotate(bool clockwise)
 		}
 	}
 	
+	/* continue moving */
 	move_down();
 }
 	
 bool I_Block::check_collision()
 {
+	/* check if any space immediately below block is occupied */
 	for(int i = 0; i < width; i++) {
-		if(' ' != screen->layout[y + height][x + i]) {
+		if(EMPTY_SPACE != screen->layout[y + height][x + i]) {
 			return true;
 		}
 	}

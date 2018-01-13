@@ -13,7 +13,7 @@ void Block::print_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			if(' ' != shape[i][j]) {
+			if(EMPTY_SPACE != shape[i][j]) {
 				screen->color[y + i][x + j] = color;
 				screen->layout[y + i][x + j] = shape[i][j];
 			}
@@ -74,7 +74,7 @@ void Block::clear_block()
 {
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			screen->layout[y + i][x + j] = ' ';
+			screen->layout[y + i][x + j] = EMPTY_SPACE;
 		}
 	}
 }
@@ -85,7 +85,7 @@ void Block::reset_shape()
 	
 	for(int i = 0; i < height; i++) {
 		for(int j = 0; j < width; j++) {
-			shape[i][j] = ' ';
+			shape[i][j] = EMPTY_SPACE;
 		}
 	}
 }
